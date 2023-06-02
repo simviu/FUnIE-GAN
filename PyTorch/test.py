@@ -46,7 +46,10 @@ else:
     pass
 
 ## load weights
-model.load_state_dict(torch.load(opt.model_path))
+print("is_cuda:"+str(is_cuda))
+device =  torch.device('cuda') if is_cuda else torch.device('cpu')
+
+model.load_state_dict(torch.load(opt.model_path, map_location=device))
 if is_cuda: model.cuda()
 model.eval()
 print ("Loaded model from %s" % (opt.model_path))
